@@ -7,7 +7,7 @@ from matplotlib import mlab
 import scipy as sp
 import scipy.stats
 import requests
-
+### thilo ist gay###
 binance = ccxt.binance() # USDT
 bitfinex = ccxt.bitfinex() # USD
 kraken = ccxt.kraken() # USD
