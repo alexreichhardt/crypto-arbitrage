@@ -16,6 +16,7 @@ bittrex = ccxt.bittrex() # USDT
 hitbtc = ccxt.hitbtc() # USDT
 gdax = ccxt.gdax() # USD
 poloniex = ccxt.poloniex() # USDT
+bitz = ccxt.bitz() #USDT
 
 #huobi = ccxt.huobi() # USDT
 #coinone = ccxt.coinone() # KRW
@@ -117,6 +118,8 @@ def get_fiat(exchange):
         fiat = 'USDT'
     elif exchange == 'kraken':
         fiat = 'USD'
+    elif exchange == 'bitz'
+        fiat = 'USDT'
         
     return fiat
 
@@ -140,6 +143,8 @@ def get_ticker(exchange):
         ticker = poloniex.fetch_ticker('BTC/' + fiat)['last']
     elif exchange == 'kraken':
         ticker = kraken.fetch_ticker('BTC/' + fiat)['last']
+    elif exchange == 'bitz':
+        ticker = bitz.fetch_ticker('BTC/' + fiat)['last']
         
     return ticker
 
@@ -161,6 +166,8 @@ def get_pair(exchange, pair):
         pair = poloniex.fetch_ticker(pair)['last']
     elif exchange == 'kraken':
         pair = kraken.fetch_ticker(pair)['last']
+    elif exchange == 'bitz':
+        pair = bitz.fetch_ticker(pair)['last']
         
     return pair
 
@@ -170,7 +177,8 @@ exchanges = ['okex',
              'bitfinex',
              'bittrex',  
              'hitbtc', 
-             'gdax']
+             'gdax',
+             'bitz']
 
 def get_pairs(exchange):
     if exchange == 'okex':
