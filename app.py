@@ -9,7 +9,38 @@ import scipy.stats
 import requests
 #import csv
 
-exchanges = ['binance', 'okex', 'bittrex', 'huobi']
+exchanges = ['okex',
+'binance',
+#'bitfinex',
+'bittrex',
+'hitbtc',
+'gdax',
+'poloniex',
+'kraken',
+'anxpro',
+'gatecoin',
+#'livecoin',
+#'yobit',
+'bitflyer',
+'quoinex',
+'bitbay',
+'bitlish',
+'bitstamp',
+'cex',
+'dsx',
+'mixcoins',
+'quadrigacx',
+'southxchange',
+'wex',
+'liqui',
+'cryptopia',
+'tidex',
+#'gateio',
+'coinsecure',
+'exmo',
+'fybsg'
+]
+
 e = [] # interim array
 for exchange in exchanges:
     function = getattr(ccxt,exchange)()
@@ -109,28 +140,6 @@ for pair in final:
 #print(opportunity_pairs)
 
 ######### VOLATILITY #########
-
-
-def get_volume(coin, exchange):
-    try:
-        r = requests.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + coin + '&tsym=BTC&limit=1&aggregate=1&e=' + exchange)
-        response = r.json()
-        return response['Data'][0]['volumeto']
-    except:
-        return 0
-
-volume_cleaned = []
-for pair in opportunity_pairs:
-    coin = pair[0].replace('/BTC', '')
-    volume_min = get_volume(coin, pair[2][1])
-    volume_max = get_volume(coin, pair[3][1])
-    
-    if volume_min >= 0.01 and volume_max >= 0.01:
-        volume_cleaned.append(pair)
-        
-for i in range(len(volume_cleaned)):
-    check_vola(volume_cleaned[i][0], volume_cleaned[i][1], volume_cleaned[i][2][1], volume_cleaned[i][3][1]) 
-        
         
 def mean_confidence_interval(data):
     a = 1.0*np.array(data)
@@ -190,3 +199,25 @@ def check_vola(coin, delta, sending_exchange, receiving_exchange):
         print()
     else:
         print(coin, sending_exchange, receiving_exchange, 'opportunity not in confidence interval')        
+
+def get_volume(coin, exchange):
+    try:
+        r = requests.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + coin + '&tsym=BTC&limit=1&aggregate=1&e=' + exchange)
+        response = r.json()
+        return response['Data'][0]['volumeto']
+    except:
+        return 0
+
+volume_cleaned = []
+for pair in opportunity_pairs:
+    coin = pair[0].replace('/BTC', '')
+    volume_min = get_volume(coin, pair[2][1])
+    volume_max = get_volume(coin, pair[3][1])
+    
+    if volume_min >= 1 and volume_max >= 1:
+        volume_cleaned.append(pair)
+        
+for i in range(len(volume_cleaned)):
+    check_vola(volume_cleaned[i][0], volume_cleaned[i][1], volume_cleaned[i][2][1], volume_cleaned[i][3][1]) 
+        
+
