@@ -9,7 +9,37 @@ import scipy.stats
 import requests
 #import csv
 
-exchanges = ['binance', 'okex', 'bittrex', 'huobi']
+exchanges = ['okex',
+'binance',
+#bitfinex,too many requests
+'bittrex',
+'hitbtc',
+'gdax',
+'poloniex',
+'kraken',
+'anxpro',
+'gatecoin',
+#'livecoin',slow
+#'yobit',too many requests
+'bitflyer',
+'quoinex',
+'bitbay',
+'bitlish',
+'bitstamp',
+'cex',
+'dsx',
+'mixcoins',
+'quadrigacx',
+'southxchange',
+'wex',
+'liqui',
+'cryptopia',
+'tidex',
+#'gateio',Bad Gateway
+'coinsecure',
+'exmo',
+'fybsg']
+
 e = [] # interim array
 for exchange in exchanges:
     function = getattr(ccxt,exchange)()
@@ -125,7 +155,7 @@ for pair in opportunity_pairs:
     volume_min = get_volume(coin, pair[2][1])
     volume_max = get_volume(coin, pair[3][1])
     
-    if volume_min >= 0.01 and volume_max >= 0.01:
+    if volume_min >= 1 and volume_max >= 1:
         volume_cleaned.append(pair)
         
 for i in range(len(volume_cleaned)):
