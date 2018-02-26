@@ -9,7 +9,10 @@ import scipy.stats
 import requests
 from slackclient import SlackClient
 from time import sleep
-#import csv
+import csv
+from datetime import datetime as dt
+import time
+path = ''
 
 order_size = 0.01 # in BTC
 volume_needed = order_size * 400
@@ -100,10 +103,16 @@ def check_vola(coin, delta, sending_exchange, receiving_exchange):
         print('Confidence:', confidence)
         plot_standard_dist(prices)
         print()
+        ts = time.time()
+        st = dt.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         
         message = 'Buy ' + coin + ' on: ' + sending_exchange + '\nSend to: ' + receiving_exchange + '\nOpportunity: ' + str(delta) + '\nConfidence interval: ' + str(confidence) 
         send_slack_message(message)
         
+        with open(path, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([st,coin,sending_exchange,receiving_exchange,str(delta),str(confidence)])
+            
         return True
     else:
         print(coin, sending_exchange, receiving_exchange, 'opportunity not in confidence interval')
