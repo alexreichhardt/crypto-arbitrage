@@ -146,7 +146,7 @@ for i in range(len(symbols_with_exchanges)):
     final_dict["pair"][pair]["exchanges"] = {}
     for exchange in symbols_with_exchanges[i][1]:
         final_dict["pair"][pair]["exchanges"][exchange] = {
-                                "price":1,
+                                "price":"price": getattr(ccxt,exchange)().fetch_ticker(pair)['last'],
                                 "volume":get_volume(symbols_with_exchanges[i][0].replace('/BTC', ''),exchange)
                                 }
 
